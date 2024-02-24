@@ -59,54 +59,14 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (res);
 }
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+int	ft_strlen(const char *s)
 {
-	unsigned int	i;
-	unsigned int	j;
-	char			*str;
-	size_t			mem;
+	size_t	i;
 
-	if (!s)
-		return (NULL);
-	if (start >= ft_strlen(s))
-		return (ft_strdup(""));
-	mem = ft_strlen(s + start);
-	if (len < mem)
-		mem = len;
-	str = (char *)malloc((mem + 1) * sizeof(char));
-	if (!str)
-		return (NULL);
-	i = start;
-	j = 0;
-	while (s[i] != '\0' && j < len && !(start > (unsigned int)ft_strlen(s)))
-	{
-		str[j] = s[i];
+	i = 0;
+	while (s[i] != '\0')
 		i++;
-		j++;
-	}
-	str[j] = '\0';
-	return (str);
-}
-
-
-char *ft_tostr(int fd)
-{
-    int char_read;
-    char *str;
-    char *res;
-
-    str = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
-    if (str == NULL)
-        return(NULL);
-    char_read = read(fd, str, BUFFER_SIZE);
-    if (!char_read)
-    {
-        free (str);
-        return(NULL);
-    }
-    str[char_read] = '\0';
-    res = ft_strchr(str, '\n');
-    return(str);
+	return (i);
 }
 
 int main()
