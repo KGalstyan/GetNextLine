@@ -14,14 +14,22 @@
 # define GET_NEXT_LINE_H
 
 #ifndef BUFFER_SIZE
-# define BUFFER_SIZE
+# define BUFFER_SIZE 2
 #endif
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <fcntrl.h>
+#include <fcntl.h>
 
-char *get_next_line(int fd);
+char    *get_next_line(int fd);
+int     ft_strchr(char *s, char c);
+int     ft_strlen(char *s);
+char	*ft_strjoin(char *s1, char *s2);
+void	ft_bzero(void *str, size_t n);
+void	*ft_calloc(size_t nelem, size_t elsize);
+char    *ft_removeline(char *buffer);
+char    *ft_readtext(int fd, char *buffer);
+char    *ft_newline(char  *buf);
 
 #endif

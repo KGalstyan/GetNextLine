@@ -10,35 +10,39 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include "get_next_line.h"
+#include "get_next_line.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <fcntl.h>
-# define BUFFER_SIZE 50
-
-char	*ft_strchr(const char *s, int c)
+int	ft_strchr(char *s, char c)
 {
 	while (*s)
 	{
 		if (*s == (char) c)
-			return ((char *)s);
+			return (1);
 		s++;
 	}
 	if (c == '\0')
-		return ((char *)s);
+		return (1);
 	return (0);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+int	ft_strlen(char *s)
 {
-	size_t	i;
+	int	i;
+
+	i = 0;
+	while (s[i] != '\0')
+		i++;
+	return (i);
+}
+
+char	*ft_strjoin(char *s1, char *s2)
+{
+	int		i;
 	int		n;
 	char	*res;
 
 	if (!s1)
-		return (NULL);
+		return (s2);
 	res = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (!res)
 		return (NULL);
@@ -59,22 +63,27 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (res);
 }
 
-int	ft_strlen(const char *s)
+void	ft_bzero(void *str, size_t n)
 {
 	size_t	i;
 
 	i = 0;
-	while (s[i] != '\0')
+	if (n == 0)
+		return ;
+	while (i < n)
+	{
+		*(char *)(str + i) = 0;
 		i++;
-	return (i);
+	}
 }
 
-int main()
+void	*ft_calloc(size_t nelem, size_t elsize)
 {
-    int fd;
-    fd = open ("test.txt", O_RDONLY);
-    char *des = ft_tostr(fd);
+	void	*arr;
 
-    printf ("%s\n", ft_strchr(des, '\n'));
-    return(0);
+	arr = (void *)malloc(nelem * elsize);
+	if (!arr)
+		return (NULL);
+	ft_bzero(arr, nelem * elsize);
+	return (arr);
 }

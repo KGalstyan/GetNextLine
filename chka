@@ -1,0 +1,126 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/23 01:33:29 by marvin            #+#    #+#             */
+/*   Updated: 2024/02/23 01:33:29 by marvin           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "get_next_line.h"
+
+char *strjoin(char *a1, char *a2)
+{
+    char *a;
+
+    a = ft_strjoin(a1, a2);
+    free(a1);
+    a1 = NULL;
+    return(a);
+}
+
+char *ft_newline(char  *buf)
+{
+    int i;
+    char *buf1;
+
+    i = 0;
+    if (!buf)
+        return (NULL);
+    while(buf[i] != '\n' && buf[i])
+        i++;
+    buf1 = (char *)malloc(sizeof(char) * (i + 2));
+    i = 0;
+    while(buf[i] != '\n' && buf[i])
+    {
+        buf1[i] = buf[i];
+        i++;
+    }
+    while (buf[i] == '\n' && buf[i])
+    {
+        buf1[i] = '\n';
+        i++;
+    }
+    buf1[i] = '\0';
+    //printf("%s", buf1);
+    return(buf1);
+}
+
+char *ft_removeline(char *buffer)
+{
+    char *str;
+    int i;
+    int n;
+
+    i = 0;
+    n = 0;
+    while(buffer[i] != '\n' && buffer[i])
+        i++;
+    str = (char *)malloc(ft_strlen(buffer) - i + 1);
+    if (!str)
+        return(NULL);
+    while(buffer[i])
+    {
+        str[n] = buffer[i];
+        n++;
+        i++;
+    }
+    str[n] = '\0';
+    return(str);
+}
+
+char *ft_readtext(int fd, char *buffer)
+{
+    int     char_read;
+    char    *buf;
+    //char    *buffer;
+
+    buf = "";
+    char_read = 1;
+    buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	while (char_read > 0)
+	{
+    	char_read = read(fd, buffer, BUFFER_SIZE);
+    	if (char_read < 0)
+        {
+            free(buffer);
+        	return(NULL);
+        }
+        //printf("%d", char_read);
+		buffer[char_read] = '\0';
+        buf = strjoin(buffer, buf);
+		if(ft_strchr(buf, '\n'))
+            break;
+	}
+    return(buf);
+}
+
+char *get_next_line(int fd)
+{
+    char *buf;
+    static char *buffer;
+
+    if(fd < 0 || BUFFER_SIZE < 1 || read(fd, 0 , 0) < 0)
+        return(NULL);
+    buffer = ft_readtext(fd, buffer);
+    if(!buffer)
+        return(NULL);
+    buf = ft_newline(buffer);
+    buffer = ft_removeline(buffer);
+    return(buf);
+}
+
+
+
+int main()
+{
+    int fd;
+    fd = open("test.txt", O_RDONLY);
+
+    printf("%s\n", get_next_line(fd));
+    //get_next_line(fd);
+    return(0);
+}
