@@ -1,16 +1,25 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kgalstya <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/01 18:44:07 by kgalstya          #+#    #+#             */
+/*   Updated: 2024/03/01 18:51:17 by kgalstya         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "get_next_line.h"
 
-
 char	*ft_newline(char *buf)
 {
-	int i;
-	char *buf1;
+	int		i;
+	char	*buf1;
 
 	i = 0;
-    if (!buf)
-        return(NULL);
+	if (!buf)
+		return (NULL);
 	while (buf[i] != '\n' && buf[i])
 		i++;
 	buf1 = (char *)malloc(sizeof(char) * (i + 2));
@@ -22,7 +31,7 @@ char	*ft_newline(char *buf)
 		buf1[i] = buf[i];
 		i++;
 	}
-	while (buf[i] == '\n' && buf[i])
+	if (buf[i] == '\n' && buf[i])
 	{
 		buf1[i] = '\n';
 		i++;
@@ -33,38 +42,34 @@ char	*ft_newline(char *buf)
 
 char	*ft_removeline(char *buffer)
 {
-	char *str;
-	int i;
-	int n;
+	char	*str;
+	int		i;
+	int		n;
 
 	i = 0;
 	n = 0;
 	while (buffer[i] != '\n' && buffer[i])
 		i++;
 	if (!buffer[i])
-    {
-        free(buffer);
-        return (NULL);
-    }
+	{
+		free(buffer);
+		return (NULL);
+	}
 	i++;
 	str = (char *)malloc(ft_strlen(buffer) - i + 1);
 	if (!str)
 		return (NULL);
 	while (buffer[i])
-    {
-		str[n] = buffer[i];
-        n++;
-        i++;
-    }
+		str[n++] = buffer[i++];
 	str[n] = '\0';
-    free(buffer);
+	free(buffer);
 	return (str);
 }
 
 char	*ft_readtext(int fd, char *buffer)
 {
-	char *str;
-	int read_char;
+	char	*str;
+	int		read_char;
 
 	read_char = 1;
 	while (read_char > 0)
@@ -80,7 +85,7 @@ char	*ft_readtext(int fd, char *buffer)
 		}
 		str[read_char] = '\0';
 		buffer = ft_strjoin_free(buffer, str);
-        free(str);
+		free(str);
 		if (ft_strchr(buffer, '\n'))
 			break ;
 	}
@@ -89,8 +94,8 @@ char	*ft_readtext(int fd, char *buffer)
 
 char	*get_next_line(int fd)
 {
-	char *buf;
-	static char *buffer;
+	char		*buf;
+	static char	*buffer;
 
 	if (fd < 0 || BUFFER_SIZE < 1 || read(fd, 0, 0) < 0)
 	{
@@ -113,23 +118,23 @@ char	*get_next_line(int fd)
 	return (buf);
 }
 
-int	main(void)
-{
-	int fd;
-	int i = 0;
-	fd = open("test.txt", O_RDONLY);
+// int	main(void)
+// {
+// 	int fd;
+// 	int i = 0;
+// 	fd = open("test.txt", O_RDONLY);
 
-	while (i < 5)
-	{
-		printf("%s", get_next_line(fd));
-		i++;
-	}
+// 	while (i < 1)
+// 	{
+// 		printf("%s", get_next_line(fd));
+// 		i++;
+// 	}
 
-	// printf("%s", ft_readtext(fd, g));
+// 	// printf("%s", ft_readtext(fd, g));
 
-	// printf("%s\n", ft_removeline("aaaa\naaa\ns"));
+// 	// printf("%s\n", ft_removeline("aaaa\naaa\ns"));
 
-	// printf("%s", ft_newline("aaaa\naaa\ns"));
+// 	// printf("%s", ft_newline("aaaa\naaa\ns"));
 
-	return (0);
-}
+// 	return (0);
+// }

@@ -2,25 +2,21 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
-/*                                                    +:+ +:+        
-	+:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+      
-	+#+        */
-/*                                                +#+#+#+#+#+  
-	+#+           */
-/*   Created: 2024/02/23 01:33:41 by marvin            #+#    #+#             */
-/*   Updated: 2024/02/23 01:33:41 by marvin           ###   ########.fr       */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kgalstya <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/01 18:44:44 by kgalstya          #+#    #+#             */
+/*   Updated: 2024/03/01 18:56:56 by kgalstya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-
 int	ft_strchr(char *s, char c)
 {
 	while (*s)
 	{
-		if (*s == (char)c)
+		if (*s == c)
 			return (1);
 		s++;
 	}
@@ -31,7 +27,7 @@ int	ft_strchr(char *s, char c)
 
 int	ft_strlen(char *s)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (s[i] != '\0')
@@ -39,27 +35,12 @@ int	ft_strlen(char *s)
 	return (i);
 }
 
-char *ft_strjoin_free(char *buffer, char *str)
-{
-	char *res;
-
-	if (!buffer)
-	{
-		buffer = malloc(1);
-		if (!buffer)
-			return (NULL);
-		buffer[0] = '\0';
-	}
-	res = ft_strjoin(buffer, str);
-	free(buffer);
-	return(res);
-}
 
 char	*ft_strjoin(char *s1, char *s2)
 {
-	int i;
-	int n;
-	char *res;
+	int		i;
+	int		n;
+	char	*res;
 
 	if (!s1 || !s2)
 		return (NULL);
@@ -83,27 +64,18 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (res);
 }
 
-void	ft_bzero(void *str, size_t n)
+char	*ft_strjoin_free(char *buffer, char *str)
 {
-	size_t i;
+	char	*res;
 
-	i = 0;
-	if (n == 0)
-		return ;
-	while (i < n)
+	if (!buffer)
 	{
-		*(char *)(str + i) = 0;
-		i++;
+		buffer = malloc(1);
+		if (!buffer)
+			return (NULL);
+		buffer[0] = '\0';
 	}
-}
-
-void	*ft_calloc(size_t nelem, size_t elsize)
-{
-	void *arr;
-
-	arr = (void *)malloc(nelem * elsize);
-	if (!arr)
-		return (NULL);
-	ft_bzero(arr, nelem * elsize);
-	return (arr);
+	res = ft_strjoin(buffer, str);
+	free(buffer);
+	return (res);
 }
