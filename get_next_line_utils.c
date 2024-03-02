@@ -6,7 +6,7 @@
 /*   By: kgalstya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 18:44:44 by kgalstya          #+#    #+#             */
-/*   Updated: 2024/03/01 18:56:56 by kgalstya         ###   ########.fr       */
+/*   Updated: 2024/03/02 10:31:12 by kgalstya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int	ft_strlen(char *s)
 		i++;
 	return (i);
 }
-
 
 char	*ft_strjoin(char *s1, char *s2)
 {

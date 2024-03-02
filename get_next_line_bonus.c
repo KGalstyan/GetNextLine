@@ -6,7 +6,7 @@
 /*   By: kgalstya <kgalstya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:27:11 by kgalstya          #+#    #+#             */
-/*   Updated: 2024/03/01 22:47:27 by kgalstya         ###   ########.fr       */
+/*   Updated: 2024/03/02 10:29:44 by kgalstya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,49 +66,49 @@ char	*ft_removeline(char *buffer)
 	return (str);
 }
 
-char    *ft_readtext(int fd, char *buffer)
+char	*ft_readtext(int fd, char *buffer)
 {
-    char    *str;
-    int     read_char;
+	char	*str;
+	int		read_char;
 
-    read_char = 1;
-    str = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
-    if (!str)
-        return(NULL);
-    while (read_char > 0)
-    {
-        read_char = read(fd, str, BUFFER_SIZE);
-        if (read_char == -1)
-        {
-            free(str);
-            return(NULL);
-        }
-        str[read_char] = '\0';
-        buffer = ft_strjoin_free(buffer, str);
-        if (ft_strchr(buffer, '\n'))
-            break;
-    }
-    free(str);
-    return(buffer);
+	read_char = 1;
+	str = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (!str)
+		return (NULL);
+	while (read_char > 0)
+	{
+		read_char = read(fd, str, BUFFER_SIZE);
+		if (read_char == -1)
+		{
+			free(str);
+			return (NULL);
+		}
+		str[read_char] = '\0';
+		buffer = ft_strjoin_free(buffer, str);
+		if (ft_strchr(buffer, '\n'))
+			break ;
+	}
+	free(str);
+	return (buffer);
 }
 
-char    *get_next_line(int fd)
+char	*get_next_line(int fd)
 {
-    static char *buffer[OPEN_MAX];
-    char        *buf;
-    
-    if (BUFFER_SIZE < 1 || fd < 0 || read(fd, 0, 0))
-    {
-        free(buffer[fd]);
-        buffer[fd] = NULL;
-        return(NULL);
-    }
-    buffer[fd] = ft_readtext(fd, buffer[fd]);
-    if (!buffer[fd])
-        return(NULL);
-    buf = ft_newline(buffer[fd]);
-    buffer[fd] = ft_removeline(buffer[fd]);
-    if (*buf == '\0')
+	static char	*buffer[OPEN_MAX];
+	char		*buf;
+
+	if (BUFFER_SIZE < 1 || fd < 0 || read(fd, 0, 0))
+	{
+		free(buffer[fd]);
+		buffer[fd] = NULL;
+		return (NULL);
+	}
+	buffer[fd] = ft_readtext(fd, buffer[fd]);
+	if (!buffer[fd])
+		return (NULL);
+	buf = ft_newline(buffer[fd]);
+	buffer[fd] = ft_removeline(buffer[fd]);
+	if (*buf == '\0')
 	{
 		free(buf);
 		free(buffer[fd]);
