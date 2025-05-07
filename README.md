@@ -42,6 +42,6 @@ This project strengthens skills in **dynamic memory allocation**, **buffer manag
 To clone and compile the project, follow these steps:
 
 ```bash
-git clone https://github.com/yourusername/get_next_line.git
+git clone https://github.com/KGalstyan/GetNextLine.git
 cd get_next_line
 make
